@@ -1,6 +1,7 @@
-from helpers import get_essay_question_ids, create_quiz_report, get_progress, download_quiz_report
+from helpers import get_essay_question_ids, create_quiz_report, get_progress, download_quiz_report, generate_random_id
 from dotenv import load_dotenv
 from canvasapi import Canvas
+import pandas as pd
 import requests
 import pprint
 import json
@@ -23,34 +24,70 @@ canvas = Canvas(URL, TOKEN)
 course = canvas.get_course(COURSE_ID)
 students = course.get_users(enrollment_type='student')
 
-# Getting a list of essay question ids to filter with
-quiz = course.get_quiz(QUIZ_ID)
-questions = quiz.get_questions()
-essay_question_ids = get_essay_question_ids(questions)
 
-# Post report and get info
-report_info = create_quiz_report(URL,
-                                 AUTH_HEADER,
-                                 COURSE_ID,
-                                 QUIZ_ID,
-                                 'student_analysis')
+def main():
+    # Getting a list of essay question ids to filter with
+    quiz = course.get_quiz(QUIZ_ID)
+    questions = quiz.get_questions()
+    essay_question_ids = get_essay_question_ids(questions)
 
-print('Creating quiz report...\n')
-while True:
-    # print('waiting for progress...')
-    progress = get_progress(report_info['progress_url'], AUTH_HEADER)
-    if progress == 'completed':
-        print('done!\n')
-        break
+    # Post report and get info
+    report_info = create_quiz_report(URL,
+                                     AUTH_HEADER,
+                                     COURSE_ID,
+                                     QUIZ_ID,
+                                     'student_analysis')
 
-# Download report
-df = download_quiz_report(report_info, AUTH_HEADER)
+    print('Creating quiz report...\n')
+    while True:
+        # print('waiting for progress...')
+        progress = get_progress(report_info['progress_url'], AUTH_HEADER)
+        if progress == 'completed':
+            print('done!\n')
+            break
 
-cols = ['name', 'id']
-for c in df.columns.values:
-    if c[:7] in essay_question_ids:
-        cols.append(c)
+    # Download report
+    df = download_quiz_report(report_info, AUTH_HEADER)
 
-df = df[cols]
+    cols = ['name', 'id']
+    for c in df.columns.values:
+        if c[:7] in essay_question_ids:
+            cols.append(c)
 
-print(df)
+    df = df[cols]
+
+    students_df = pd.DataFrame(columns=['Name', 'UBC ID', 'Anonymous ID'])
+
+    for index, row in df.iterrows():
+        # generate a random id for the student
+        anonymous_id = generate_random_id()
+
+        # get UBC id
+        ubc_stu_id = get_ubc_id(row['id'])
+
+        # add the random id, student name, and UBC sid to a dataset that will be made into csv
+        students_df = students_df.append({'Name': row['name'],
+                                          'UBC ID': ubc_stu_id,
+                                          'Anonymous ID': anonymous_id},
+                                         ignore_index=True)
+
+    # output to {course_id}_{quiz_id}_students.csv
+    dir_path = f'output/COURSE({COURSE_ID})_QUIZ({QUIZ_ID})'
+    if not os.path.exists(dir_path):
+        os.makedirs(dir_path)
+
+    students_df.to_csv(
+        f'{dir_path}/{COURSE_ID}_{QUIZ_ID}_students.csv', index=False)
+
+
+def get_ubc_id(canvas_id):
+    for s in students:
+        for key, val in s.attributes.items():
+            if key == 'id':
+                if val == canvas_id:
+                    return s.attributes['sis_user_id']
+    return 'ERROR: UBC id Not Found'
+
+
+if __name__ == '__main__':
+    main()

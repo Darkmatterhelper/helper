@@ -1,5 +1,7 @@
 import pandas as pd
 import requests
+import random
+import string
 import json
 import io
 
@@ -60,3 +62,8 @@ def download_quiz_report(report_info, auth_header):
         print('ERROR: There was a problem downloading the quiz report')
         print('...if a quiz has just changed or submission just added, please try again in a moment')
         exit()
+
+
+def generate_random_id():
+    return''.join([random.choice(string.ascii_letters
+                                 + string.digits) for n in range(15)])
