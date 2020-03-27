@@ -11,7 +11,7 @@ def get_essay_question_ids(questions):
     )
 
     only_ids = map(
-        lambda q: (q.id),
+        lambda q: (str(q.id)),
         essay_questions
     )
 
@@ -44,14 +44,19 @@ def get_progress(progress_url, auth_header):
 
 def download_quiz_report(report_info, auth_header):
     # downloads the quiz reports and gathers info
-    download_url = report_info['file']['url']
-    filename = report_info['file']['display_name']
-    res = requests.get(download_url, headers=auth_header)
+    try:
+        download_url = report_info['file']['url']
+        filename = report_info['file']['display_name']
+        res = requests.get(download_url, headers=auth_header)
 
-    with (open('raw_reports/' + filename, 'wb')) as output:
-        output.write(res.content)
-        print(f'Creating Raw Report: {filename}')
+        with (open('raw_reports/' + filename, 'wb')) as output:
+            output.write(res.content)
+            print(f'Creating Raw Report: {filename}')
 
-    df = pd.read_csv(io.StringIO(res.content.decode('utf-8')))
+        df = pd.read_csv(io.StringIO(res.content.decode('utf-8')))
 
-    return df
+        return df
+    except:
+        print('ERROR: There was a problem downloading the quiz report')
+        print('...if a quiz has just changed or submission just added, please try again in a moment')
+        exit()

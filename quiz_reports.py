@@ -1,5 +1,4 @@
 from helpers import get_essay_question_ids, create_quiz_report, get_progress, download_quiz_report
-
 from dotenv import load_dotenv
 from canvasapi import Canvas
 import requests
@@ -38,43 +37,20 @@ report_info = create_quiz_report(URL,
 
 print('Creating quiz report...\n')
 while True:
-    print('waiting for progress...')
+    # print('waiting for progress...')
     progress = get_progress(report_info['progress_url'], AUTH_HEADER)
     if progress == 'completed':
         print('done!\n')
         break
 
 # Download report
-download_quiz_report(report_info, AUTH_HEADER)
+df = download_quiz_report(report_info, AUTH_HEADER)
 
+cols = ['name', 'id']
+for c in df.columns.values:
+    if c[:7] in essay_question_ids:
+        cols.append(c)
 
-# reports = filter(
-#     lambda r: (r.report_type == 'student_analysis'),
-#     reports
-# )
+df = df[cols]
 
-# for report in reports:
-#     pp.pprint(report.attributes)
-
-# submissions = quiz.get_all_quiz_submissions()
-
-# allowed_wf_states = ['untaken',
-#                      'pending_review',
-#                      'complete',
-#                      'settings_only',
-#                      'preview']
-
-# filtered_subs = filter(
-#     lambda sub: (sub.workflow_state in allowed_wf_states),
-#     submissions
-# )
-
-# for item in submissions:
-#     pp.pprint(item.attributes)
-
-# count = 0
-# for sub in filtered_subs:
-# questions = submissions[0].get_submission_questions()
-
-# for q in questions:
-#     pp.pprint(q.answer)
+print(df)
