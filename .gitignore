@@ -3,6 +3,9 @@
 __pycache__/
 
 
-# Keep raw_reports folder but not contents
+# Keep following folders but not contents
 raw_reports/*
-!raw_reports/.gitkeep 
+!raw_reports/.gitkeep
+
+output/*
+!output/.gitkeep
