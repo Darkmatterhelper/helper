@@ -1,4 +1,4 @@
-from helpers import get_essay_question_ids
+from helpers import get_essay_question_ids, create_quiz_report, get_progress, download_quiz_report
 
 from dotenv import load_dotenv
 from canvasapi import Canvas
@@ -29,7 +29,32 @@ quiz = course.get_quiz(QUIZ_ID)
 questions = quiz.get_questions()
 essay_question_ids = get_essay_question_ids(questions)
 
-print(essay_question_ids)
+# Post report and get info
+report_info = create_quiz_report(URL,
+                                 AUTH_HEADER,
+                                 COURSE_ID,
+                                 QUIZ_ID,
+                                 'student_analysis')
+
+print('Creating quiz report...\n')
+while True:
+    print('waiting for progress...')
+    progress = get_progress(report_info['progress_url'], AUTH_HEADER)
+    if progress == 'completed':
+        print('done!\n')
+        break
+
+# Download report
+download_quiz_report(report_info, AUTH_HEADER)
+
+
+# reports = filter(
+#     lambda r: (r.report_type == 'student_analysis'),
+#     reports
+# )
+
+# for report in reports:
+#     pp.pprint(report.attributes)
 
 # submissions = quiz.get_all_quiz_submissions()
 

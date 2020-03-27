@@ -1,4 +1,8 @@
 .vscode
 .env
-
 __pycache__/
+
+
+# Keep raw_reports folder but not contents
+raw_reports/*
+!raw_reports/.gitkeep 
