@@ -1,4 +1,5 @@
 from helpers import get_essay_question_ids, create_quiz_report, get_progress, download_quiz_report, generate_random_id
+from reportlab.pdfgen import canvas as pdfcanvas
 from dotenv import load_dotenv
 from canvasapi import Canvas
 import pandas as pd
@@ -58,6 +59,10 @@ def main():
 
     students_df = pd.DataFrame(columns=['Name', 'UBC ID', 'Anonymous ID'])
 
+    dir_path = f'output/COURSE({COURSE_ID})_QUIZ({QUIZ_ID})'
+    if not os.path.exists(dir_path):
+        os.makedirs(dir_path)
+
     for index, row in df.iterrows():
         # generate a random id for the student
         anonymous_id = generate_random_id()
@@ -71,11 +76,12 @@ def main():
                                           'Anonymous ID': anonymous_id},
                                          ignore_index=True)
 
-    # output to {course_id}_{quiz_id}_students.csv
-    dir_path = f'output/COURSE({COURSE_ID})_QUIZ({QUIZ_ID})'
-    if not os.path.exists(dir_path):
-        os.makedirs(dir_path)
+        # create a pdf
+        doc_title = f'{anonymous_id}_{COURSE_ID}_{QUIZ_ID}'
+        pdf = pdfcanvas.Canvas(dir_path + '/' + doc_title + '.pdf')
+        pdf.save()
 
+    # output to {course_id}_{quiz_id}_students.csv
     students_df.to_csv(
         f'{dir_path}/{COURSE_ID}_{QUIZ_ID}_students.csv', index=False)
 
