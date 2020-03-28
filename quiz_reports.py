@@ -1,4 +1,4 @@
-from helpers import get_essay_question_ids, create_quiz_report, get_progress, download_quiz_report, generate_random_id
+from helpers import get_essay_question_ids, create_quiz_report, get_progress, download_quiz_report, generate_random_id, draw_my_ruler
 from reportlab.pdfgen import canvas as pdfcanvas
 from dotenv import load_dotenv
 from canvasapi import Canvas
@@ -57,6 +57,10 @@ def main():
 
     df = df[cols]
 
+    # remove name and id so we're only left with question column names - used later
+    cols.remove('name')
+    cols.remove('id')
+
     students_df = pd.DataFrame(columns=['Name', 'UBC ID', 'Anonymous ID'])
 
     dir_path = f'output/COURSE({COURSE_ID})_QUIZ({QUIZ_ID})'
@@ -79,11 +83,52 @@ def main():
         # create a pdf
         doc_title = f'{anonymous_id}_{COURSE_ID}_{QUIZ_ID}'
         pdf = pdfcanvas.Canvas(dir_path + '/' + doc_title + '.pdf')
+        # draw_my_ruler(pdf)
+        # set title for pdf
+        pdf.setTitle(doc_title)
+
+        # add anonymous id to top of document
+        pdf.setFont('Courier-Bold', 14)
+        pdf.drawString(50, 750, anonymous_id)
+
+        for c in cols:
+            text = pdf.beginText(50, 700)
+            text.setFont('Courier', 12)
+            text = wrap_text_line(text, c)
+            text.textLine(' ')
+            text = wrap_text_line(text, row[c])
+            pdf.drawText(text)
+            pdf.showPage()
+
+        # save pdf
         pdf.save()
 
     # output to {course_id}_{quiz_id}_students.csv
     students_df.to_csv(
         f'{dir_path}/{COURSE_ID}_{QUIZ_ID}_students.csv', index=False)
+
+
+def wrap_text_line(pdf_txt, raw_txt):
+    while len(raw_txt) > 0:
+        # take off the first 70 characters from str
+        if len(raw_txt) <= 60:
+            pdf_txt.textLine(raw_txt)
+            return pdf_txt
+        else:
+            line = raw_txt[0:60]
+            raw_txt = raw_txt[60:]
+
+            if ' ' in raw_txt:
+                split = raw_txt.split(' ', 1)
+                line = line + split[0]
+                raw_txt = split[1]
+            else:
+                line = line + raw_txt
+                raw_txt = ''
+
+            pdf_txt.textLine(line)
+
+    return pdf_txt
 
 
 def get_ubc_id(canvas_id):
