@@ -30,9 +30,6 @@ Quiz reports is a jupyter notebook and python script that interacts with the [Ca
 
 * All workflow states will be valid for the CSV so any of these can appear ['untaken', 'pending_review', 'complete', 'settings_only', 'preview'] . However, PDFs will only be made for submissions with a workflow_state of pending review  OR completed
 
-<!-- REMOVE THIS SOON -->
-<!-- * The [workflow state](https://canvas.instructure.com/doc/api/quiz_submissions.html) for each submission must be `complete` or `pending_review` in order for a PDF to be outputted. Other workflow states will appear in the CSV however won't have corresponding PDFs. -->
-
 ## Installation
 
 TODO
