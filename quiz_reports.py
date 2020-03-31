@@ -89,7 +89,7 @@ def main():
 
         for c in cols:
 
-            # add anonymous id above each question
+            # print anonymous id above each question
             pdf.setFont('Courier-Bold', 14)
             pdf.drawString(50, 750, anonymous_id)
 
