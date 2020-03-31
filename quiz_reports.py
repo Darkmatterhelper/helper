@@ -2,8 +2,10 @@ from helpers import get_essay_question_ids, create_quiz_report, get_progress, do
 from reportlab.pdfgen import canvas as pdfcanvas
 from dotenv import load_dotenv
 from canvasapi import Canvas
+from shutil import rmtree
 import pandas as pd
 import requests
+import zipfile
 import pprint
 import json
 import os
@@ -63,9 +65,17 @@ def main():
 
     students_df = pd.DataFrame(columns=['Name', 'UBC ID', 'Anonymous ID'])
 
+    # make output directory for COURSE+QUIZ
     dir_path = f'output/COURSE({COURSE_ID})_QUIZ({QUIZ_ID})'
     if not os.path.exists(dir_path):
         os.makedirs(dir_path)
+
+    # make outpit subdirectory for pdfs - delete old data if any is there
+    pdf_dir_path = dir_path + '/pdfs'
+    if os.path.exists(pdf_dir_path):
+        rmtree(pdf_dir_path)
+
+    os.makedirs(pdf_dir_path)
 
     for index, row in df.iterrows():
         # generate a random id for the student
@@ -82,8 +92,10 @@ def main():
 
         # create a pdf
         doc_title = f'{anonymous_id}_{COURSE_ID}_{QUIZ_ID}'
-        pdf = pdfcanvas.Canvas(dir_path + '/' + doc_title + '.pdf')
+
+        pdf = pdfcanvas.Canvas(pdf_dir_path + '/' + f'{doc_title}.pdf')
         # draw_my_ruler(pdf)
+
         # set title for pdf
         pdf.setTitle(doc_title)
 
@@ -118,6 +130,20 @@ def main():
     # output to {course_id}_{quiz_id}_students.csv
     students_df.to_csv(
         f'{dir_path}/{COURSE_ID}_{QUIZ_ID}_students.csv', index=False)
+
+    # Call the function to retrieve all files and folders of the assigned directory
+    filePaths = retrieve_file_paths(pdf_dir_path)
+
+    # writing files to a zipfile
+    zip_file = zipfile.ZipFile(pdf_dir_path + '.zip', 'w')
+    with zip_file:
+        # writing each file one by one
+        for file in filePaths:
+            arcname = file[len(dir_path) + 1:]
+            zip_file.write(file, arcname)
+
+    print(pdf_dir_path + '.zip file is created successfully!')
+    rmtree(pdf_dir_path)
 
 
 def wrap_text_line(pdf_txt, raw_txt, lines, pdf):
@@ -160,6 +186,23 @@ def get_ubc_id(canvas_id):
                 if val == canvas_id:
                     return s.attributes['sis_user_id']
     return 'ERROR: UBC id Not Found'
+
+
+# A function to return all file paths of the particular directory
+def retrieve_file_paths(dirName):
+
+    # setup file paths variable
+    filePaths = []
+
+    # Read all directory, subdirectories and file lists
+    for root, directories, files in os.walk(dirName):
+        for filename in files:
+            # Create the full filepath by using os module.
+            filePath = os.path.join(root, filename)
+            filePaths.append(filePath)
+
+    # return all paths
+    return filePaths
 
 
 if __name__ == '__main__':
