@@ -71,7 +71,7 @@ def main():
         os.makedirs(dir_path)
 
     # make outpit subdirectory for pdfs - delete old data if any is there
-    pdf_dir_path = dir_path + '/pdfs/'
+    pdf_dir_path = dir_path + '/pdfs'
     if os.path.exists(pdf_dir_path):
         rmtree(pdf_dir_path)
 
@@ -93,7 +93,7 @@ def main():
         # create a pdf
         doc_title = f'{anonymous_id}_{COURSE_ID}_{QUIZ_ID}'
 
-        pdf = pdfcanvas.Canvas(pdf_dir_path + f'{doc_title}.pdf')
+        pdf = pdfcanvas.Canvas(pdf_dir_path + '/' + f'{doc_title}.pdf')
         # draw_my_ruler(pdf)
 
         # set title for pdf
@@ -130,6 +130,20 @@ def main():
     # output to {course_id}_{quiz_id}_students.csv
     students_df.to_csv(
         f'{dir_path}/{COURSE_ID}_{QUIZ_ID}_students.csv', index=False)
+
+    # Call the function to retrieve all files and folders of the assigned directory
+    filePaths = retrieve_file_paths(pdf_dir_path)
+
+    # writing files to a zipfile
+    zip_file = zipfile.ZipFile(pdf_dir_path + '.zip', 'w')
+    with zip_file:
+        # writing each file one by one
+        for file in filePaths:
+            arcname = file[len(dir_path) + 1:]
+            zip_file.write(file, arcname)
+
+    print(pdf_dir_path + '.zip file is created successfully!')
+    rmtree(pdf_dir_path)
 
 
 def wrap_text_line(pdf_txt, raw_txt, lines, pdf):
@@ -172,6 +186,23 @@ def get_ubc_id(canvas_id):
                 if val == canvas_id:
                     return s.attributes['sis_user_id']
     return 'ERROR: UBC id Not Found'
+
+
+# A function to return all file paths of the particular directory
+def retrieve_file_paths(dirName):
+
+    # setup file paths variable
+    filePaths = []
+
+    # Read all directory, subdirectories and file lists
+    for root, directories, files in os.walk(dirName):
+        for filename in files:
+            # Create the full filepath by using os module.
+            filePath = os.path.join(root, filename)
+            filePaths.append(filePath)
+
+    # return all paths
+    return filePaths
 
 
 if __name__ == '__main__':
