@@ -87,12 +87,13 @@ def main():
         # set title for pdf
         pdf.setTitle(doc_title)
 
-        # add anonymous id to top of document
-        pdf.setFont('Courier-Bold', 14)
-        pdf.drawString(50, 750, anonymous_id)
-
-        lines = 0
         for c in cols:
+
+            # add anonymous id above each question
+            pdf.setFont('Courier-Bold', 14)
+            pdf.drawString(50, 750, anonymous_id)
+
+            lines = 0
             text = pdf.beginText(50, 700)
             text.setFont('Courier', 12)
 
@@ -123,10 +124,9 @@ def wrap_text_line(pdf_txt, raw_txt, lines, pdf):
     while len(raw_txt) > 0:
 
         if (lines >= 45):
-            print('hit')
             pdf.drawText(pdf_txt)
             pdf.showPage()
-            pdf_txt = pdf.beginText(50, 700)
+            pdf_txt = pdf.beginText(50, 750)
             pdf_txt.setFont('Courier', 12)
             lines = 0
 
