@@ -117,7 +117,7 @@ def main():
             lines += 1
 
             # add student response
-            text, lines, pdf = wrap_text_line(text, row[c], lines, pdf)
+            text, lines, pdf = wrap_text_line(text, str(row[c]), lines, pdf)
             pdf.drawText(text)
 
             # add page break for next question/response
