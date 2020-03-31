@@ -91,14 +91,25 @@ def main():
         pdf.setFont('Courier-Bold', 14)
         pdf.drawString(50, 750, anonymous_id)
 
+        lines = 0
         for c in cols:
             text = pdf.beginText(50, 700)
             text.setFont('Courier', 12)
-            text = wrap_text_line(text, c)
+
+            # add question text
+            text, lines, pdf = wrap_text_line(text, c, lines, pdf)
+
+            # add space
             text.textLine(' ')
-            text = wrap_text_line(text, row[c])
+            lines += 1
+
+            # add student response
+            text, lines, pdf = wrap_text_line(text, row[c], lines, pdf)
             pdf.drawText(text)
+
+            # add page break for next question/response
             pdf.showPage()
+            lines = 0
 
         # save pdf
         pdf.save()
@@ -108,12 +119,22 @@ def main():
         f'{dir_path}/{COURSE_ID}_{QUIZ_ID}_students.csv', index=False)
 
 
-def wrap_text_line(pdf_txt, raw_txt):
+def wrap_text_line(pdf_txt, raw_txt, lines, pdf):
     while len(raw_txt) > 0:
+
+        if (lines >= 45):
+            print('hit')
+            pdf.drawText(pdf_txt)
+            pdf.showPage()
+            pdf_txt = pdf.beginText(50, 700)
+            pdf_txt.setFont('Courier', 12)
+            lines = 0
+
         # take off the first 70 characters from str
         if len(raw_txt) <= 60:
             pdf_txt.textLine(raw_txt)
-            return pdf_txt
+            lines += 1
+            return pdf_txt, lines, pdf
         else:
             line = raw_txt[0:60]
             raw_txt = raw_txt[60:]
@@ -127,8 +148,9 @@ def wrap_text_line(pdf_txt, raw_txt):
                 raw_txt = ''
 
             pdf_txt.textLine(line)
+            lines += 1
 
-    return pdf_txt
+    return pdf_txt, lines, pdf
 
 
 def get_ubc_id(canvas_id):
