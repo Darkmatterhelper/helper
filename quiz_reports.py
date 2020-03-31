@@ -2,8 +2,10 @@ from helpers import get_essay_question_ids, create_quiz_report, get_progress, do
 from reportlab.pdfgen import canvas as pdfcanvas
 from dotenv import load_dotenv
 from canvasapi import Canvas
+from shutil import rmtree
 import pandas as pd
 import requests
+import zipfile
 import pprint
 import json
 import os
@@ -63,9 +65,17 @@ def main():
 
     students_df = pd.DataFrame(columns=['Name', 'UBC ID', 'Anonymous ID'])
 
+    # make output directory for COURSE+QUIZ
     dir_path = f'output/COURSE({COURSE_ID})_QUIZ({QUIZ_ID})'
     if not os.path.exists(dir_path):
         os.makedirs(dir_path)
+
+    # make outpit subdirectory for pdfs - delete old data if any is there
+    pdf_dir_path = dir_path + '/pdfs/'
+    if os.path.exists(pdf_dir_path):
+        rmtree(pdf_dir_path)
+
+    os.makedirs(pdf_dir_path)
 
     for index, row in df.iterrows():
         # generate a random id for the student
@@ -82,8 +92,10 @@ def main():
 
         # create a pdf
         doc_title = f'{anonymous_id}_{COURSE_ID}_{QUIZ_ID}'
-        pdf = pdfcanvas.Canvas(dir_path + '/' + doc_title + '.pdf')
+
+        pdf = pdfcanvas.Canvas(pdf_dir_path + f'{doc_title}.pdf')
         # draw_my_ruler(pdf)
+
         # set title for pdf
         pdf.setTitle(doc_title)
 
