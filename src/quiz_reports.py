@@ -1,56 +1,67 @@
+"""
+QUIZ REPORTS: main
+
+authors:
+@markoprodanovic
+
+last edit:
+Wednesday, April 01, 2020
+"""
+
 from helpers import get_essay_question_ids, create_quiz_report, get_progress, download_quiz_report, generate_random_id, draw_my_ruler
 from reportlab.pdfgen import canvas as pdfcanvas
+from interface import get_user_inputs
 from dotenv import load_dotenv
 from canvasapi import Canvas
+from util import shut_down
 from shutil import rmtree
 import pandas as pd
+import settings
 import requests
 import zipfile
 import pprint
 import json
 import os
 
+# for printing neatly formatted objects (used for debugging)
 load_dotenv()
 pp = pprint.PrettyPrinter(indent=4)
 
-# User Input
-URL = os.getenv('URL')
-TOKEN = os.getenv('TOKEN')
-COURSE_ID = os.getenv('COURSE_ID')
-QUIZ_ID = os.getenv('QUIZ_ID')
-
-# Authorization for API Calls
-AUTH_HEADER = {'Authorization': f'Bearer {TOKEN}'}
-
-# Calls for course and student info
-canvas = Canvas(URL, TOKEN)
-course = canvas.get_course(COURSE_ID)
-students = course.get_users(enrollment_type='student')
-
 
 def main():
-    # Getting a list of essay question ids to filter with
-    quiz = course.get_quiz(QUIZ_ID)
-    questions = quiz.get_questions()
+
+    # initialize global variables - call only once
+    settings.init()
+
+    # get user inputs
+    inputs = get_user_inputs()
+
+    # save course id and quiz id to local variables (as they are used frequently)
+    course_id = inputs['course_id']
+    quiz_id = inputs['quiz_id']
+
+    # get quiz questions and save ids of essay questions
+    questions = settings.quiz.get_questions()
     essay_question_ids = get_essay_question_ids(questions)
 
     # Post report and get info
-    report_info = create_quiz_report(URL,
-                                     AUTH_HEADER,
-                                     COURSE_ID,
-                                     QUIZ_ID,
+    report_info = create_quiz_report(inputs['base_url'],
+                                     settings.auth_header,
+                                     course_id,
+                                     quiz_id,
                                      'student_analysis')
 
     print('Creating quiz report...\n')
     while True:
         # print('waiting for progress...')
-        progress = get_progress(report_info['progress_url'], AUTH_HEADER)
+        progress = get_progress(
+            report_info['progress_url'], settings.auth_header)
         if progress == 'completed':
             print('done!\n')
             break
 
     # Download report
-    df = download_quiz_report(report_info, AUTH_HEADER)
+    df = download_quiz_report(report_info, settings.auth_header)
 
     cols = ['name', 'id']
     for c in df.columns.values:
@@ -66,7 +77,7 @@ def main():
     students_df = pd.DataFrame(columns=['Name', 'UBC ID', 'Anonymous ID'])
 
     # make output directory for COURSE+QUIZ
-    dir_path = f'output/COURSE({COURSE_ID})_QUIZ({QUIZ_ID})'
+    dir_path = f'output/COURSE({course_id})_QUIZ({quiz_id})'
     if not os.path.exists(dir_path):
         os.makedirs(dir_path)
 
@@ -91,7 +102,7 @@ def main():
                                          ignore_index=True)
 
         # create a pdf
-        doc_title = f'{anonymous_id}_{COURSE_ID}_{QUIZ_ID}'
+        doc_title = f'{anonymous_id}_{course_id}_{quiz_id}'
 
         pdf = pdfcanvas.Canvas(pdf_dir_path + '/' + f'{doc_title}.pdf')
         # draw_my_ruler(pdf)
@@ -129,7 +140,7 @@ def main():
 
     # output to {course_id}_{quiz_id}_students.csv
     students_df.to_csv(
-        f'{dir_path}/{COURSE_ID}_{QUIZ_ID}_students.csv', index=False)
+        f'{dir_path}/{course_id}_{quiz_id}_students.csv', index=False)
 
     # Call the function to retrieve all files and folders of the assigned directory
     filePaths = retrieve_file_paths(pdf_dir_path)
@@ -180,7 +191,7 @@ def wrap_text_line(pdf_txt, raw_txt, lines, pdf):
 
 
 def get_ubc_id(canvas_id):
-    for s in students:
+    for s in settings.students:
         for key, val in s.attributes.items():
             if key == 'id':
                 if val == canvas_id:
@@ -205,5 +216,12 @@ def retrieve_file_paths(dirName):
     return filePaths
 
 
-if __name__ == '__main__':
-    main()
+# if __name__ == '__main__':
+
+#     # From Env (only if quiz_reports.py is run from console)
+#     URL = os.getenv('URL')
+#     TOKEN = os.getenv('TOKEN')
+#     COURSE_ID = os.getenv('COURSE_ID')
+#     QUIZ_ID = os.getenv('QUIZ_ID')
+
+#     main(URL, TOKEN, COURSE_ID, QUIZ_ID)
