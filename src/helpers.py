@@ -1,7 +1,10 @@
+from util import shut_down
 import pandas as pd
 import requests
+import settings
 import random
 import string
+import time
 import json
 import io
 
@@ -24,44 +27,59 @@ def get_essay_question_ids(questions):
     return ids
 
 
-def create_quiz_report(base_url, auth_header, course_id, quiz_id, report_type):
+def create_quiz_report(base_url, course_id, quiz_id):
     url = f'{base_url}/api/v1/courses/{str(course_id)}/quizzes/{str(quiz_id)}/reports'
 
-    payload = {"quiz_report[report_type]": report_type,
-               "quiz_report[includes_all_versions]": True}
+    payload = {'quiz_report[report_type]': 'student_analysis',
+               'quiz_report[includes_all_versions]': True}
 
-    r = requests.post(url, headers=auth_header, data=payload)
+    r = requests.post(url, headers=settings.auth_header, data=payload)
 
     export_details = json.loads(r.text)
 
     return(export_details)
 
 
-def get_progress(progress_url, auth_header):
-    r_progress = requests.get(progress_url, headers=auth_header)
+def get_progress(progress_url, attempt_number):
+    # maximum 9 attempts (90 seconds) to get progress before shutting down with error
+    if attempt_number >= 9:
+        shut_down(
+            'ERROR: Application timeout, Canvas quiz report is taking too long to generate. Try again in a few minutes.')
+
+    r_progress = requests.get(progress_url, headers=settings.auth_header)
     progress_state = json.loads(r_progress.text)
     progress_completion = progress_state['workflow_state']
-    return(progress_completion)
+
+    if progress_completion == 'completed':
+        return progress_completion
+    elif progress_completion == 'failed':
+        raise Exception
+    elif progress_completion == 'queued' or progress_completion == 'running':
+        # set timeout for 10 seconds then try again
+        print(f'Report state is: {progress_completion}, waiting...')
+        time.sleep(10)
+        return get_progress(progress_url, attempt_number + 1)
+    else:
+        shut_down(
+            f'ERROR: Unrecognized value for workflow_state in Canvas: {progress_completion}.')
 
 
-def download_quiz_report(report_info, auth_header):
+def download_quiz_report(report_info):
     # downloads the quiz reports and gathers info
     try:
         download_url = report_info['file']['url']
         filename = report_info['file']['display_name']
-        res = requests.get(download_url, headers=auth_header)
+        res = requests.get(download_url, headers=settings.auth_header)
 
         with (open('raw_reports/' + filename, 'wb')) as output:
             output.write(res.content)
-            print(f'Creating Raw Report: {filename}')
+            print(f'\nOutputting Raw Report: {filename}')
 
         df = pd.read_csv(io.StringIO(res.content.decode('utf-8')))
 
         return df
-    except:
-        print('ERROR: There was a problem downloading the quiz report')
-        print('...if a quiz has just changed or submission just added, please try again in a moment')
-        exit()
+    except Exception:
+        shut_down('ERROR: Unable to download quiz report.')
 
 
 def generate_random_id():
