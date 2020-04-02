@@ -41,8 +41,8 @@ def create_quiz_report(base_url, course_id, quiz_id):
 
 
 def get_progress(progress_url, attempt_number):
-    # maximum 10 attempts to get progress before shutting down with error
-    if attempt_number >= 10:
+    # maximum 9 attempts (90 seconds) to get progress before shutting down with error
+    if attempt_number >= 9:
         shut_down(
             'ERROR: Application timeout, Canvas quiz report is taking too long to generate. Try again in a few minutes.')
 
