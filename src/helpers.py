@@ -56,7 +56,7 @@ def get_progress(progress_url, attempt_number):
         raise Exception
     elif progress_completion == 'queued' or progress_completion == 'running':
         # set timeout for 10 seconds then try again
-        print(f'Report state is: {progress_completion}, waiting 10s')
+        print(f'Report state is: {progress_completion}, waiting...')
         time.sleep(10)
         return get_progress(progress_url, attempt_number + 1)
     else:
@@ -73,7 +73,7 @@ def download_quiz_report(report_info):
 
         with (open('raw_reports/' + filename, 'wb')) as output:
             output.write(res.content)
-            print(f'Creating Raw Report: {filename}')
+            print(f'\nOutputting Raw Report: {filename}')
 
         df = pd.read_csv(io.StringIO(res.content.decode('utf-8')))
 

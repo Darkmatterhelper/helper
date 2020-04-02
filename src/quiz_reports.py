@@ -43,33 +43,34 @@ def main():
     # create a new quiz report on Canvas
     try:
         print(f'Creating Canvas quiz report for: {settings.quiz.title}...\n')
-        report_info = create_quiz_report(url, course_id, quiz_id)
-        progress = get_progress(report_info['progress_url'], 1)
+        post_report_res = create_quiz_report(url, course_id, quiz_id)
+        progress = get_progress(post_report_res['progress_url'], 1)
         assert progress == 'completed'
     except Exception:
         shut_down(
             f'ERROR: Failed to create Canvas quiz report for: {settings.quiz.title}.')
 
-    # download report that was just generated
+    report_info = get_quiz_report(
+        url, course_id, quiz_id, post_report_res['id'])
+
+    # download raw report that was just generated
     df = download_quiz_report(report_info)
 
-    # THIS IS WHERE I STOPPED REFACTORING SO FAR
-    shut_down('TEMP KILL SWITCH')
-
+    # reduce dataframe columns name, id and any question columns
     cols = ['name', 'id']
     for c in df.columns.values:
         if c[:7] in essay_question_ids:
             cols.append(c)
-
     df = df[cols]
 
     # remove name and id so we're only left with question column names - used later
     cols.remove('name')
     cols.remove('id')
 
+    # make students dataframe
     students_df = pd.DataFrame(columns=['Name', 'UBC ID', 'Anonymous ID'])
 
-    # make output directory for COURSE+QUIZ
+    # make output directory for quiz
     dir_path = f'output/COURSE({course_id})_QUIZ({quiz_id})'
     if not os.path.exists(dir_path):
         os.makedirs(dir_path)
@@ -148,6 +149,18 @@ def main():
 
     print(pdf_dir_path + '.zip file is created successfully!')
     rmtree(pdf_dir_path)
+
+
+def get_quiz_report(base_url, course_id, quiz_id, report_id):
+    url = f'{base_url}/api/v1/courses/{str(course_id)}/quizzes/{str(quiz_id)}/reports/{str(report_id)}'
+
+    payload = {'include': '[file, progress]'}
+
+    r = requests.get(url, headers=settings.auth_header, data=payload)
+
+    data = json.loads(r.text)
+
+    return(data)
 
 
 def wrap_text_line(pdf_txt, raw_txt, lines, pdf):
