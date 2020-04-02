@@ -34,34 +34,27 @@ def main():
     settings.init()
 
     # get user inputs
-    inputs = get_user_inputs()
-
-    # save course id and quiz id to local variables (as they are used frequently)
-    course_id = inputs['course_id']
-    quiz_id = inputs['quiz_id']
+    url, course_id, quiz_id = get_user_inputs()
 
     # get quiz questions and save ids of essay questions
     questions = settings.quiz.get_questions()
     essay_question_ids = get_essay_question_ids(questions)
 
-    # Post report and get info
-    report_info = create_quiz_report(inputs['base_url'],
-                                     settings.auth_header,
-                                     course_id,
-                                     quiz_id,
-                                     'student_analysis')
+    # create a new quiz report on Canvas
+    try:
+        print(f'Creating Canvas quiz report for: {settings.quiz.title}...\n')
+        report_info = create_quiz_report(url, course_id, quiz_id)
+        progress = get_progress(report_info['progress_url'], 1)
+        assert progress == 'completed'
+    except Exception:
+        shut_down(
+            f'ERROR: Failed to create Canvas quiz report for: {settings.quiz.title}.')
 
-    print('Creating quiz report...\n')
-    while True:
-        # print('waiting for progress...')
-        progress = get_progress(
-            report_info['progress_url'], settings.auth_header)
-        if progress == 'completed':
-            print('done!\n')
-            break
+    # download report that was just generated
+    df = download_quiz_report(report_info)
 
-    # Download report
-    df = download_quiz_report(report_info, settings.auth_header)
+    # THIS IS WHERE I STOPPED REFACTORING SO FAR
+    shut_down('TEMP KILL SWITCH')
 
     cols = ['name', 'id']
     for c in df.columns.values:
@@ -214,14 +207,3 @@ def retrieve_file_paths(dirName):
 
     # return all paths
     return filePaths
-
-
-# if __name__ == '__main__':
-
-#     # From Env (only if quiz_reports.py is run from console)
-#     URL = os.getenv('URL')
-#     TOKEN = os.getenv('TOKEN')
-#     COURSE_ID = os.getenv('COURSE_ID')
-#     QUIZ_ID = os.getenv('QUIZ_ID')
-
-#     main(URL, TOKEN, COURSE_ID, QUIZ_ID)

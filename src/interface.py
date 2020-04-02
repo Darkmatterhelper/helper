@@ -76,12 +76,7 @@ def get_user_inputs():
     settings.auth_header = auth_header
 
     # return inputs dictionary
-    return {
-        'token': token,
-        'base_url': url,
-        'course_id': course_id,
-        'quiz_id': quiz_id
-    }
+    return url, course_id, quiz_id
 
 
 def _prompt_for_confirmation(user_name, course_name, quiz_title):
