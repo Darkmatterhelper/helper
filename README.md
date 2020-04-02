@@ -39,4 +39,23 @@
 
 ## Installation
 
-TODO
+> Project uses **conda** to manage environment (See official **conda** documentation [here](https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#creating-an-environment-from-an-environment-yml-file))
+
+1. Create the environment from the `environment.yml` file
+
+    `$ conda env create -f environment.yml`
+
+2. Activate the new environment
+
+    `$ conda activate quiz_reports_env`
+
+3. Verify that the new environment was installed correctly
+
+    `$ conda env list`
+
+4. Run the Jupyter Notebook in browser
+
+    `$ jupyter notebook`
+
+5. Open `Quiz Reports.ipynb`
+6. Once Notebook is open, select **Kernal** > **Restart and Run All** (then follow prompts)
