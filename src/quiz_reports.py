@@ -5,7 +5,7 @@ authors:
 @markoprodanovic
 
 last edit:
-Wednesday, April 01, 2020
+Wednesday, April 02, 2020
 """
 
 from helpers import get_essay_question_ids, create_quiz_report, get_progress, download_quiz_report, generate_random_id, draw_my_ruler
@@ -68,7 +68,8 @@ def main():
     cols.remove('id')
 
     # make students dataframe
-    students_df = pd.DataFrame(columns=['Name', 'UBC ID', 'Anonymous ID'])
+    students_df = pd.DataFrame(
+        columns=['Name', 'UBC ID', 'Canvas ID', 'Anonymous ID'])
 
     # make output directory for quiz
     dir_path = f'output/COURSE({course_id})_QUIZ({quiz_id})'
@@ -92,6 +93,7 @@ def main():
         # add the random id, student name, and UBC sid to a dataset that will be made into csv
         students_df = students_df.append({'Name': row['name'],
                                           'UBC ID': ubc_stu_id,
+                                          'Canvas ID': row['id'],
                                           'Anonymous ID': anonymous_id},
                                          ignore_index=True)
 
