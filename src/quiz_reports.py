@@ -110,7 +110,9 @@ def main():
 
             # print anonymous id above each question
             pdf.setFont('Courier-Bold', 14)
-            pdf.drawString(50, 750, anonymous_id)
+            pdf.drawString(50, 760, anonymous_id)
+            pdf.setFont('Courier', 14)
+            pdf.drawString(50, 740, settings.course.name)
 
             lines = 0
             text = pdf.beginText(50, 700)
