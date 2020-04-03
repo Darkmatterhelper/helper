@@ -1,6 +1,8 @@
 .vscode
 .env
 __pycache__/
+.ipynb_checkpoints
+*.code-workspace
 
 
 # Keep following folders but not contents
@@ -9,5 +11,3 @@ raw_reports/*
 
 output/*
 !output/.gitkeep
-
-.ipynb_checkpoints

@@ -9,10 +9,10 @@ Wednesday, April 01, 2020
 """
 
 import getpass
-import settings
-from util import shut_down
 from canvasapi import Canvas
 from termcolor import cprint
+from util import shut_down
+import settings
 
 
 def get_user_inputs():
