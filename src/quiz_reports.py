@@ -5,13 +5,16 @@ authors:
 @markoprodanovic
 
 last edit:
-Wednesday, April 02, 2020
+Monday, April 06, 2020
 """
 
-from helpers import get_essay_question_ids, create_quiz_report, get_progress, download_quiz_report, generate_random_id, draw_my_ruler
-from reportlab.pdfgen import canvas as pdfcanvas
+from helpers import (get_essay_question_ids, create_quiz_report,
+                     get_progress, download_quiz_report, generate_random_id)
+from pdf_helpers import generate_pdf, wrap_text_line, draw_my_ruler
+# from reportlab.pdfgen import canvas as pdfcanvas
 from interface import get_user_inputs
 from dotenv import load_dotenv
+from termcolor import cprint
 from canvasapi import Canvas
 from util import shut_down
 from shutil import rmtree
@@ -100,41 +103,11 @@ def main():
         # create a pdf
         doc_title = f'{anonymous_id}_{course_id}_{quiz_id}'
 
-        pdf = pdfcanvas.Canvas(pdf_dir_path + '/' + f'{doc_title}.pdf')
-        # draw_my_ruler(pdf)
-
-        # set title for pdf
-        pdf.setTitle(doc_title)
-
-        for c in cols:
-
-            # print anonymous id above each question
-            pdf.setFont('Courier-Bold', 14)
-            pdf.drawString(50, 760, anonymous_id)
-            pdf.setFont('Courier', 14)
-            pdf.drawString(50, 740, settings.course.name)
-
-            lines = 0
-            text = pdf.beginText(50, 700)
-            text.setFont('Courier', 12)
-
-            # add question text
-            text, lines, pdf = wrap_text_line(text, c, lines, pdf)
-
-            # add space
-            text.textLine(' ')
-            lines += 1
-
-            # add student response
-            text, lines, pdf = wrap_text_line(text, str(row[c]), lines, pdf)
-            pdf.drawText(text)
-
-            # add page break for next question/response
-            pdf.showPage()
-            lines = 0
-
-        # save pdf
-        pdf.save()
+        # create and output pdf
+        try:
+            generate_pdf(row, cols, doc_title, pdf_dir_path, anonymous_id)
+        except Exception:
+            shut_down('There was a problem generating PDFs')
 
     # output to {course_id}_{quiz_id}_students.csv
     students_df.to_csv(
@@ -151,7 +124,7 @@ def main():
             arcname = file[len(dir_path) + 1:]
             zip_file.write(file, arcname)
 
-    print(pdf_dir_path + '.zip file is created successfully!')
+    cprint('PDFs successfully created in: ' + pdf_dir_path + '.zip', 'green')
     rmtree(pdf_dir_path)
 
 
@@ -165,39 +138,6 @@ def get_quiz_report(base_url, course_id, quiz_id, report_id):
     data = json.loads(r.text)
 
     return(data)
-
-
-def wrap_text_line(pdf_txt, raw_txt, lines, pdf):
-    while len(raw_txt) > 0:
-
-        if (lines >= 45):
-            pdf.drawText(pdf_txt)
-            pdf.showPage()
-            pdf_txt = pdf.beginText(50, 750)
-            pdf_txt.setFont('Courier', 12)
-            lines = 0
-
-        # take off the first 70 characters from str
-        if len(raw_txt) <= 60:
-            pdf_txt.textLine(raw_txt)
-            lines += 1
-            return pdf_txt, lines, pdf
-        else:
-            line = raw_txt[0:60]
-            raw_txt = raw_txt[60:]
-
-            if ' ' in raw_txt:
-                split = raw_txt.split(' ', 1)
-                line = line + split[0]
-                raw_txt = split[1]
-            else:
-                line = line + raw_txt
-                raw_txt = ''
-
-            pdf_txt.textLine(line)
-            lines += 1
-
-    return pdf_txt, lines, pdf
 
 
 def get_ubc_id(canvas_id):
