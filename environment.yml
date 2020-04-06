@@ -96,6 +96,7 @@ dependencies:
   - sip=4.19.8=py36h0a44026_0
   - six=1.14.0=py36_0
   - sqlite=3.31.1=ha441bb4_0
+  - termcolor=1.1.0=py36_1
   - terminado=0.8.3=py36_0
   - testpath=0.4.4=py_0
   - tk=8.6.8=ha441bb4_0
