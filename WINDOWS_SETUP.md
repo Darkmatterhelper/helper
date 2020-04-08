@@ -24,7 +24,6 @@
     1. Run `. /c/Anaconda3/etc/profile.d/conda.sh`
     1. Run `conda --version` and ensure version number gets printed
     1. Run `conda env create -f win_environment.yml` and wait for installation to finish
-    1. Move on to *Ran it before?* section
 
 ## Run (do every time)
 
