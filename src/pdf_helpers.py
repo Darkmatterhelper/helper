@@ -5,12 +5,11 @@ authors:
 @markoprodanovic
 
 last edit:
-Monday, April 06, 2020
+Monday, May 04, 2020
 """
 
 from reportlab.pdfgen import canvas as pdfcanvas
 import settings
-import math
 
 
 def generate_pdf(row, cols, title, pdf_dir_path, anonymous_id):

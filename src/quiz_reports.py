@@ -5,7 +5,7 @@ authors:
 @markoprodanovic
 
 last edit:
-Monday, April 06, 2020
+Monday, May 04, 2020
 """
 
 from helpers import (get_all_essay_question_ids, create_quiz_report,
@@ -41,6 +41,8 @@ def main():
 
     # get quiz questions and save ids of essay questions
     quiz_questions = settings.quiz.get_questions()
+
+    # get list of ids of all essay question (in Quiz and in Quiz Banks if used)
     essay_question_ids = get_all_essay_question_ids(quiz_questions)
 
     # create a new quiz report on Canvas
