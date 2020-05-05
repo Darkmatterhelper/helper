@@ -7,7 +7,7 @@ authors:
 @markoprodanovic
 
 last edit:
-Wednesday, April 03, 2020
+Monday, May 04, 2020
 """
 
 
@@ -24,3 +24,6 @@ def init():
 
     # Authorization for API Calls
     global auth_header
+
+    # Does this quiz use question bank(s) (default: false)
+    global has_question_bank
