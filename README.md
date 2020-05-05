@@ -44,6 +44,24 @@
 
 > Project uses **conda** to manage environment (See official **conda** documentation [here](https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#creating-an-environment-from-an-environment-yml-file))
 
-Mac instructions [here](SETUP_MAC.md)
+## Setup (only needs to be done once)
 
-Windows instructions [here](SETUP_WIN.md)
+1. Clone repository or download **quiz_reports** from TeamShare (for Sauder Staff)
+
+1. Install [Anaconda](https://www.anaconda.com/distribution/#download-section) (Python 3.7 version)
+
+1. Import environment
+    1. Open **Anaconda Navigator** and select **Import**
+    1. Name the environment `quiz_reports_env`
+    1. Navigate to quiz_reports directory and select environment file:
+        * MacOS: `environment_mac.yml`
+        * Windows: `environmen_win.yml`
+    1. Wait for installation to complete
+
+## Run (do every time)
+
+1. In **Anaconda Navigator**, run `quiz_reports_env` and select **Open with Jupyter Notebook**
+
+1. In the browser, navigate to the **quiz_reports** project folder and select **Quiz Reports.ipynb** (Note this will be located wherever you downloaded or cloaned it in step 1)
+
+1. Selct **Kernal** > **Restart & Run All**
