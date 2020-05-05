@@ -8,7 +8,7 @@ last edit:
 Monday, April 06, 2020
 """
 
-from helpers import (get_essay_question_ids, create_quiz_report,
+from helpers import (get_all_essay_question_ids, create_quiz_report,
                      get_progress, download_quiz_report, generate_random_id)
 from pdf_helpers import generate_pdf, wrap_text_line, draw_my_ruler
 # from reportlab.pdfgen import canvas as pdfcanvas
@@ -40,8 +40,8 @@ def main():
     url, course_id, quiz_id = get_user_inputs()
 
     # get quiz questions and save ids of essay questions
-    questions = settings.quiz.get_questions()
-    essay_question_ids = get_essay_question_ids(questions)
+    quiz_questions = settings.quiz.get_questions()
+    essay_question_ids = get_all_essay_question_ids(quiz_questions)
 
     # create a new quiz report on Canvas
     try:

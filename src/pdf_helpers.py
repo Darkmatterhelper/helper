@@ -10,6 +10,7 @@ Monday, April 06, 2020
 
 from reportlab.pdfgen import canvas as pdfcanvas
 import settings
+import math
 
 
 def generate_pdf(row, cols, title, pdf_dir_path, anonymous_id):
@@ -38,8 +39,10 @@ def generate_pdf(row, cols, title, pdf_dir_path, anonymous_id):
         text.textLine(' ')
         lines += 1
 
-        # add student response
-        text, lines, pdf = wrap_text_line(text, str(row[c]), lines, pdf)
+        # add student response if one is there, otherwise print a blank below the question
+        if str(row[c]) != 'nan':
+            text, lines, pdf = wrap_text_line(text, str(row[c]), lines, pdf)
+
         pdf.drawText(text)
 
         # add page break for next question/response

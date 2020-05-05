@@ -66,20 +66,29 @@ def get_user_inputs():
         shut_down(
             f'ERROR: Quiz not found [ID: {quiz_id}]. Please check quiz number.')
 
+    question_bank_input = input('Does this quiz use Question Bank(s)? [y/n]: ')
+
+    if question_bank_input is 'y' or question_bank_input is 'Y':
+        has_question_bank = True
+    else:
+        has_question_bank = False
+
     # prompt user for confirmation
-    _prompt_for_confirmation(user.name, course.name, quiz.title)
+    _prompt_for_confirmation(user.name, course.name,
+                             quiz.title, has_question_bank)
 
     # set course, quiz, students and auth_header as global variables
     settings.course = course
     settings.quiz = quiz
     settings.students = students
     settings.auth_header = auth_header
+    settings.has_question_bank = has_question_bank
 
     # return inputs dictionary
     return url, course_id, quiz_id
 
 
-def _prompt_for_confirmation(user_name, course_name, quiz_title):
+def _prompt_for_confirmation(user_name, course_name, quiz_title, has_question_bank):
     """Prints user inputs to screen and asks user to confirm. Shuts down if user inputs
     anything other than 'Y' or 'y'. Returns otherwise.
 
@@ -96,10 +105,11 @@ def _prompt_for_confirmation(user_name, course_name, quiz_title):
     print(f'USER:  {user_name}')
     print(f'COURSE:  {course_name}')
     print(f'QUIZ:  {quiz_title}')
+    print(f'HAS QUESTION BANK: {has_question_bank}')
     print('\n')
 
     confirm = input(
-        'Would you like to continue using the above information?[y/n]: ')
+        'Would you like to continue using the above information? [y/n]: ')
 
     print('\n')
 

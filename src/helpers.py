@@ -10,6 +10,7 @@ Monday, April 06, 2020
 
 from util import shut_down
 import pandas as pd
+import settings
 import requests
 import settings
 import random
@@ -19,7 +20,29 @@ import json
 import io
 
 
-def get_essay_question_ids(questions):
+def get_all_essay_question_ids(quiz_questions):
+
+    # get the ones in the quiz (not in question banks!)
+    essay_question_ids = _get_essay_question_ids(quiz_questions)
+
+    if settings.has_question_bank:
+        print('Getting question data from Question Bank...')
+        # get all quiz submissions
+        submissions = settings.quiz.get_all_quiz_submissions()
+        for sub in submissions:
+            submission_questions = sub.get_submission_questions()
+
+            submission_essay_question_ids = _get_essay_question_ids(
+                submission_questions)
+
+            for question_id in submission_essay_question_ids:
+                if question_id not in essay_question_ids:
+                    essay_question_ids.append(question_id)
+
+    return essay_question_ids
+
+
+def _get_essay_question_ids(questions):
     essay_questions = filter(
         lambda q: (q.question_type == 'essay_question'),
         questions
