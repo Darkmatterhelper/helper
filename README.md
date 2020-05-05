@@ -64,4 +64,4 @@
 
 1. In the browser, navigate to the **quiz_reports** project folder and select **Quiz Reports.ipynb** (Note this will be located wherever you downloaded or cloaned it in step 1)
 
-1. Selct **Kernal** > **Restart & Run All**
+1. Select **Kernal** > **Restart & Run All**
