@@ -55,7 +55,7 @@
     1. Name the environment `quiz_reports_env`
     1. Navigate to quiz_reports directory and select environment file:
         * MacOS: `environment_mac.yml`
-        * Windows: `environmen_win.yml`
+        * Windows: `environment_win.yml`
     1. Wait for installation to complete
 
 ## Run (do every time)
