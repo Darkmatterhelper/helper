@@ -4,6 +4,9 @@ __pycache__/
 .ipynb_checkpoints
 *.code-workspace
 
+# ignore legacy folder
+legacy
+
 
 # Keep following folders but not contents
 raw_reports/*

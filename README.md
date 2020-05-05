@@ -43,7 +43,3 @@
 ## Getting Started
 
 > Project uses **conda** to manage environment (See official **conda** documentation [here](https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#creating-an-environment-from-an-environment-yml-file))
-
-Mac instructions [here](SETUP_MAC.md)
-
-Windows instructions [here](SETUP_WIN.md)
