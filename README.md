@@ -1,7 +1,5 @@
 # Quiz Reports
 
-> Quiz Reports is in BETA. Use at own risk. We are constantly improving performance, usability, and stability.
-
 ## Summary
 
 **Quiz Reports** is a Jupyter Notebook and Python application that pulls quiz data from [Canvas LMS](https://github.com/instructure/canvas-lms) to create PDF documents containing student answers to *essay questions*. Application requires the following user inputs:
