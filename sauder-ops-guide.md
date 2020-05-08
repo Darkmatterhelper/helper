@@ -8,7 +8,7 @@
 ## 🥇 First time running it? Start here
 
 1. Copy **quiz_reports** folder from TeamShare onto Desktop (or anywhere you'd like)
-    * `.../Canvas/Canvas API/Operational Scripts/quiz_reports`  
+    * location: `.../Canvas/Canvas API/Operational Scripts/quiz_reports`  
 
 1. Install [Anaconda](https://www.anaconda.com/products/individual#Downloads) (Python 3.7 version)
 
