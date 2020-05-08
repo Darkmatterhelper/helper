@@ -3,7 +3,7 @@
 ## 🤔 Where to start
 
 * [I **have not** run this script on this computer before](#-first-time-running-it-start-here)
-* [I **have** successfully run it on this computer before](#-ran-this-before-start-here)
+* [I **have** successfully run it on this computer before](#-ran-it-before-start-here)
 
 ## 🥇 First time running it? Start here
 
@@ -32,7 +32,7 @@
 
     ![anaconda-import-box](./_assets/anaconda-import-box.png)
 
-    **Now you're all set up! Time to [run it](#-ran-this-before-start-here)**
+    **Now you're all set up! Time to [run it](#-ran-it-before-start-here)**
 
 ## 🚀 Ran it before? Start here
 
@@ -40,7 +40,7 @@
 
     ![anaconda-run](./_assets/anaconda-run.png)
 
-1. In the browser, navigate to the **quiz_reports** project folder and select **Quiz Reports.ipynb** (Note this will be located wherever you saved it in [Step 1]())
+1. In the browser, navigate to the **quiz_reports** project folder and select **Quiz Reports.ipynb** (Note this will be located wherever you saved it in Step 1)
 
     ![browser-select-notebook](./_assets/browser-select-notebook.png)
 
