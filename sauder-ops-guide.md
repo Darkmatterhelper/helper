@@ -10,7 +10,7 @@
 1. Copy **quiz_reports** folder from TeamShare onto Desktop (or anywhere you'd like)
     * location: `.../Canvas/Canvas API/Operational Scripts/quiz_reports`  
 
-1. Install [Anaconda](https://www.anaconda.com/products/individual#Downloads) (Python 3.7 version)
+1. If not already installed, install [Anaconda](https://www.anaconda.com/products/individual#Downloads) (Python 3.7 version)
 
     > Note if you are using a older Windows computer you may need to select the 32-Bit Graphical Installer. See [here](https://www.computerhope.com/issues/ch001121.htm) to find out.
 
