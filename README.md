@@ -41,9 +41,9 @@
 
 ## Getting Started
 
-> Project uses **conda** to manage environment (See official **conda** documentation [here](https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#creating-an-environment-from-an-environment-yml-file))
+*Are you Sauder Operations Staff? Please see [Sauder Setup](sauder-ops-guide.md) for detailed instructions*
 
-> Are you Sauder Operations Staff? Please see [Sauder Setup](sauder-ops-guide.md) for detailed instructions.
+> Project uses **conda** to manage environment (See official **conda** documentation [here](https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#creating-an-environment-from-an-environment-yml-file))
 
 1. Clone **quiz_reports** repository
 
