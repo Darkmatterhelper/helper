@@ -1,7 +1,5 @@
 # Quiz Reports
 
-> Quiz Reports is in BETA. Use at own risk. We are constantly improving performance, usability, and stability.
-
 ## Summary
 
 **Quiz Reports** is a Jupyter Notebook and Python application that pulls quiz data from [Canvas LMS](https://github.com/instructure/canvas-lms) to create PDF documents containing student answers to *essay questions*. Application requires the following user inputs:
@@ -10,7 +8,7 @@
 * Active Canvas Access Token
 * Course ID
 * Quiz ID
-
+* Question Banks (users will need to specify whether or not the quiz uses Question Banks)
 
 ## Output
 
@@ -34,7 +32,6 @@
 
 ## Important Caveats
 
-* **Does not work for quizzes with Question Groups**
 * Only works for “Classic Quizzes” on Canvas (not New Quizzes)
 * Formatting in the student response is **not** preserved
 * Will only output questions of type “Essay Question” on Canvas
@@ -42,26 +39,19 @@
 
 ## Getting Started
 
+*Are you Sauder Operations Staff? Please go [here](sauder-ops-guide.md) for detailed instructions*
+
 > Project uses **conda** to manage environment (See official **conda** documentation [here](https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#creating-an-environment-from-an-environment-yml-file))
 
-## Setup (only needs to be done once)
+1. Clone **quiz_reports** repository
 
-1. Clone repository or download **quiz_reports** from TeamShare (for Sauder Staff)
-
-1. Install [Anaconda](https://www.anaconda.com/distribution/#download-section) (Python 3.7 version)
+1. Install [conda](https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html) (Python 3.7 version)
 
 1. Import environment
-    1. Open **Anaconda Navigator** and select **Import**
-    1. Name the environment `quiz_reports_env`
-    1. Navigate to quiz_reports directory and select environment file:
-        * MacOS: `environment_mac.yml`
-        * Windows: `environment_win.yml`
-    1. Wait for installation to complete
+    1. MacOS: `$ conda env create -f environment_mac.yml`
+    1. Windows: `$ conda env create -f environment_win.yml`
 
-## Run (do every time)
-
-1. In **Anaconda Navigator**, run `quiz_reports_env` and select **Open with Jupyter Notebook**
-
-1. In the browser, navigate to the **quiz_reports** project folder and select **Quiz Reports.ipynb** (Note this will be located wherever you downloaded or cloaned it in step 1)
-
-1. Select **Kernal** > **Restart & Run All**
+1. Run:
+    1. `$ conda activate quiz_reports_env`
+    1. `$ jupyter notebook`
+    1. Select **Kernal** > **Restart & Run All**
