@@ -68,7 +68,7 @@ def get_user_inputs():
 
     question_bank_input = input('Does this quiz use Question Bank(s)? [y/n]: ')
 
-    if question_bank_input is 'y' or question_bank_input is 'Y':
+    if question_bank_input == 'y' or question_bank_input == 'Y':
         has_question_bank = True
     else:
         has_question_bank = False
@@ -113,9 +113,9 @@ def _prompt_for_confirmation(user_name, course_name, quiz_title, has_question_ba
 
     print('\n')
 
-    if confirm is 'y' or confirm is 'Y':
+    if confirm == 'y' or confirm == 'Y':
         return
-    elif confirm is 'n' or confirm is 'N':
+    elif confirm == 'n' or confirm == 'N':
         shut_down('Exiting...')
     else:
         shut_down('ERROR: Only accepted values are y and n')
