@@ -50,6 +50,6 @@ _Are you Sauder Operations Staff? Please go [here](sauder-ops-guide.md) for deta
 1. Import environment: `$ conda env create -f environment.yml`
 
 1. Run:
-   1. `$ conda activate quiz_reports_env`
+   1. `$ conda activate quiz-reports`
    1. `$ jupyter notebook`
    1. Select **Kernal** > **Restart & Run All**
