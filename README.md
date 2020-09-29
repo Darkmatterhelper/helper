@@ -30,7 +30,7 @@
 
 > NOTE: this table contains sensitive information and should **NOT** be distributed or uploaded anywhere
 
-## Important Caveats
+## :warning: Important Caveats
 
 - Only works for “Classic Quizzes” on Canvas (not New Quizzes)
 - Formatting in the student response is **not** preserved
