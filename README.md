@@ -1,5 +1,6 @@
 # Quiz Response PDFs
 > quiz-response-pdfs
+> python=3.7 & canvasapi=2.0
 ## Summary 
 
 **Quiz Response PDFs (quiz-response-pdfs)** is a Jupyter Notebook and Python application that pulls quiz data from [Canvas LMS](https://github.com/instructure/canvas-lms) to create PDF documents containing student answers to _essay questions_. This was developed to allow essay type questions to be run through Turnitin. The application requires the following user inputs:
@@ -47,7 +48,7 @@ _Are you Sauder Operations Staff? Please go [here]([sauder-ops-guide.md](https:/
 
 1. Clone **quiz-response-pdfs** repository
 
-2. Install [conda](https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html) (Python 3.7 version)
+2. Ensure you have [conda](https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html) installed (Python 3.7 version)
 
 3. Import environment (once): `$ conda env create -f environment.yml`
 
