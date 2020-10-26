@@ -1,8 +1,8 @@
-# Quiz Reports
-
+# Quiz Response PDFs
+(quiz-response-pdfs)
 ## Summary 
 
-**Quiz Reports** is a Jupyter Notebook and Python application that pulls quiz data from [Canvas LMS](https://github.com/instructure/canvas-lms) to create PDF documents containing student answers to _essay questions_. Application requires the following user inputs:
+**Quiz Response PDFs (quiz-response-pdfs)** is a Jupyter Notebook and Python application that pulls quiz data from [Canvas LMS](https://github.com/instructure/canvas-lms) to create PDF documents containing student answers to _essay questions_. This was developed to allow essay type questions to be run through Turnitin. The application requires the following user inputs:
 
 - Canvas Instance
 - Active Canvas Access Token
@@ -39,17 +39,19 @@
 
 ## Getting Started
 
-_Are you Sauder Operations Staff? Please go [here](sauder-ops-guide.md) for detailed instructions_
+### Sauder Operations
+_Are you Sauder Operations Staff? Please go [here]([sauder-ops-guide.md](https://github.com/saud-learning-services/instructions-and-other-templates/blob/master/sauder-ops-guide-jupyter-env-and-launch.md#-ran-it-before-start-here)) for detailed instructions. ("The Project", or "the-project" is "quiz-response-pdfs" or "Quiz Response PDFs")._
 
+### General
 > Project uses **conda** to manage environment (See official **conda** documentation [here](https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#creating-an-environment-from-an-environment-yml-file))
 
-1. Clone **quiz_reports** repository
+1. Clone **quiz-response-pdfs** repository
 
-1. Install [conda](https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html) (Python 3.7 version)
+2. Install [conda](https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html) (Python 3.7 version)
 
-1. Import environment: `$ conda env create -f environment.yml`
+3. Import environment (once): `$ conda env create -f environment.yml`
 
-1. Run:
-   1. `$ conda activate quiz-reports`
-   1. `$ jupyter notebook`
-   1. Select **Kernal** > **Restart & Run All**
+4. Run (every time):
+   1. `$ conda activate quiz-response-pdfs`
+   2. `$ jupyter notebook`
+   3. Select **Kernal** > **Restart & Run All**
