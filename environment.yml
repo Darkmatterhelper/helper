@@ -1,4 +1,4 @@
-name: quiz-reports
+name: quiz-response-pdfs
 channels:
   - conda-forge
   - anaconda
