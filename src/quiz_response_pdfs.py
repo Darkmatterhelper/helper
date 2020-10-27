@@ -9,10 +9,10 @@ Monday, May 04, 2020
 """
 
 from helpers import (get_all_essay_question_ids, create_quiz_report,
-                     get_progress, download_quiz_report, generate_random_id)
+                     get_progress, download_quiz_report, generate_random_id, )
 from pdf_helpers import generate_pdf, wrap_text_line, draw_my_ruler
 # from reportlab.pdfgen import canvas as pdfcanvas
-from interface import get_user_inputs
+from interface import get_user_inputs, get_user_inputs_test
 from dotenv import load_dotenv
 from termcolor import cprint
 from canvasapi import Canvas
@@ -62,7 +62,7 @@ def main():
     df = download_quiz_report(report_info)
 
     # reduce dataframe columns name, id and any question columns
-    cols = ['name', 'id']
+    cols = ['name', 'id', 'sis_id']
     for c in df.columns.values:
         if c[:7] in essay_question_ids:
             cols.append(c)
@@ -71,6 +71,7 @@ def main():
     # remove name and id so we're only left with question column names - used later
     cols.remove('name')
     cols.remove('id')
+    cols.remove('sis_id')
 
     # make students dataframe
     students_df = pd.DataFrame(
@@ -92,16 +93,16 @@ def main():
         # generate a random id for the student
         anonymous_id = generate_random_id()
 
-        # get UBC id
-        ubc_stu_id = get_ubc_id(row['id'])
+        # get UBC id - you can get this in a real SIS linked course!
+        # ubc_stu_id = get_ubc_id(row['id'])
+        
 
         # add the random id, student name, and UBC sid to a dataset that will be made into csv
         students_df = students_df.append({'Name': row['name'],
-                                          'UBC ID': ubc_stu_id,
+                                          'UBC ID': row['sis_id'],
                                           'Canvas ID': row['id'],
                                           'Anonymous ID': anonymous_id},
                                          ignore_index=True)
-
         # create a pdf
         doc_title = f'{anonymous_id}_{course_id}_{quiz_id}'
 
@@ -142,15 +143,6 @@ def get_quiz_report(base_url, course_id, quiz_id, report_id):
     return(data)
 
 
-def get_ubc_id(canvas_id):
-    for s in settings.students:
-        for key, val in s.attributes.items():
-            if key == 'id':
-                if val == canvas_id:
-                    return s.attributes['sis_user_id']
-    return 'ERROR: UBC id Not Found'
-
-
 # A function to return all file paths of the particular directory
 def retrieve_file_paths(dirName):
 
@@ -166,3 +158,7 @@ def retrieve_file_paths(dirName):
 
     # return all paths
     return filePaths
+
+# allow to run as script if needed
+if __name__ == "__main__":
+    main()
