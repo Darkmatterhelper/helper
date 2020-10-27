@@ -46,7 +46,7 @@
 ### Sauder Operations
 _Are you Sauder Operations Staff? Please go [here](https://github.com/saud-learning-services/instructions-and-other-templates/blob/master/sauder-ops-guide-jupyter-env-and-launch.md#-ran-it-before-start-here) for detailed instructions to run in Jupyter. ("The Project", or "the-project" is "quiz-response-pdfs" or "Quiz Response PDFs")._
 
-### General
+### General (terminal instructions)
 > Project uses **conda** to manage environment (See official **conda** documentation [here](https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#creating-an-environment-from-an-environment-yml-file))
 
 1. Clone **quiz-response-pdfs** repository
@@ -56,6 +56,6 @@ _Are you Sauder Operations Staff? Please go [here](https://github.com/saud-learn
 3. Import environment (once): `$ conda env create -f environment.yml`
 
 4. Run (every time):
-   1. `$ conda activate quiz-response-pdfs`
-   2. `$ python src/quiz_response_pdfs`
-   3. Select **Kernal** > **Restart & Run All**
+   1. navigate to your directory `$ cd YOUR_PATH/quiz-response-pdfs`
+   1. activate the environment (see step 3 on first run) `$ conda activate quiz-response-pdfs`
+   2. run the script and follow prompts in terminal `$ python src/quiz_response_pdfs`
