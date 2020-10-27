@@ -1,12 +1,14 @@
 # Quiz Response PDFs
-> - quiz-response-pdfs
+> - name: quiz-response-pdfs
+> - ops-run-with: jupyter
 > - python>=3.7
 > - canvasapi>=2.0.0
+
 ## Summary 
 
 **Quiz Response PDFs (quiz-response-pdfs)** is a Jupyter Notebook and Python application that pulls quiz data from [Canvas LMS](https://github.com/instructure/canvas-lms) to create PDF documents containing student answers to _essay questions_. This was developed to allow essay type questions to be run through Turnitin. The application requires the following user inputs:
 
-- Canvas Instance
+- Canvas Instance (i.e. https://ubc.instructure.com)
 - Active Canvas Access Token
 - Course ID
 - Quiz ID
@@ -42,7 +44,7 @@
 ## Getting Started
 
 ### Sauder Operations
-_Are you Sauder Operations Staff? Please go [here]([sauder-ops-guide.md](https://github.com/saud-learning-services/instructions-and-other-templates/blob/master/sauder-ops-guide-jupyter-env-and-launch.md#-ran-it-before-start-here)) for detailed instructions. ("The Project", or "the-project" is "quiz-response-pdfs" or "Quiz Response PDFs")._
+_Are you Sauder Operations Staff? Please go [here](https://github.com/saud-learning-services/instructions-and-other-templates/blob/master/sauder-ops-guide-jupyter-env-and-launch.md#-ran-it-before-start-here) for detailed instructions to run in Jupyter. ("The Project", or "the-project" is "quiz-response-pdfs" or "Quiz Response PDFs")._
 
 ### General
 > Project uses **conda** to manage environment (See official **conda** documentation [here](https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#creating-an-environment-from-an-environment-yml-file))
@@ -55,5 +57,5 @@ _Are you Sauder Operations Staff? Please go [here]([sauder-ops-guide.md](https:/
 
 4. Run (every time):
    1. `$ conda activate quiz-response-pdfs`
-   2. `$ jupyter notebook`
+   2. `$ python src/quiz_response_pdfs`
    3. Select **Kernal** > **Restart & Run All**
