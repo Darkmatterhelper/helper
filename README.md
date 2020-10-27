@@ -49,13 +49,14 @@ _Are you Sauder Operations Staff? Please go [here](https://github.com/saud-learn
 ### General (terminal instructions)
 > Project uses **conda** to manage environment (See official **conda** documentation [here](https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#creating-an-environment-from-an-environment-yml-file))
 
+#### First Time
+
+1. Ensure you have [conda](https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html) installed (Python 3.7 version)
+1. Import environment (once): `$ conda env create -f environment.yml`
 1. Clone **quiz-response-pdfs** repository
 
-2. Ensure you have [conda](https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html) installed (Python 3.7 version)
-
-3. Import environment (once): `$ conda env create -f environment.yml`
-
-4. Run (every time):
+#### Every Time
+1. Run:
    1. navigate to your directory `$ cd YOUR_PATH/quiz-response-pdfs`
    1. activate the environment (see step 3 on first run) `$ conda activate quiz-response-pdfs`
-   2. run the script and follow prompts in terminal `$ python src/quiz_response_pdfs`
+   1. run the script and follow prompts in terminal `$ python src/quiz_response_pdfs`
