@@ -15,6 +15,29 @@ from util import shut_down
 import settings
 
 
+def get_user_inputs_test():
+    url = 'https://ubc.test.instructure.com/'
+    token = ''
+    auth_header = {'Authorization': f'Bearer {token}'}
+    course_id = None 
+    quiz_id = None
+    has_question_bank = False #or False
+
+    canvas = Canvas(url, token)
+    course = canvas.get_course(course_id)
+    students = course.get_users(enrollment_type='student')
+    quiz = course.get_quiz(quiz_id)
+
+    # set course, quiz, students and auth_header as global variables
+    settings.course = course
+    settings.quiz = quiz
+    settings.students = students
+    settings.auth_header = auth_header
+    settings.has_question_bank = has_question_bank
+
+    # return inputs dictionary
+    return url, course_id, quiz_id
+
 def get_user_inputs():
     """Prompt user for required inputs. Queries Canvas API throughout to check for
     access and validity errors. Errors stop execution and print to screen.
