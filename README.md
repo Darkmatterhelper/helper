@@ -47,7 +47,7 @@
 
 ### Sauder Operations
 
-_Are you Sauder Operations Staff? Please go [here](https://github.com/saud-learning-services/instructions-and-other-templates/blob/master/sauder-ops-guide-jupyter-env-and-launch.md#-ran-it-before-start-here) for detailed instructions to run in Jupyter. ("The Project", or "the-project" is "quiz-response-pdfs" or "Quiz Response PDFs")._
+_Are you Sauder Operations Staff? Please go [here](https://github.com/saud-learning-services/instructions-and-other-templates/blob/main/docs/running-instructions.md#running-the-script) for detailed instructions to run in Jupyter. ("The Project", or "the-project" is "quiz-response-pdfs" or "Quiz Response PDFs")._
 
 ### General (terminal instructions)
 
