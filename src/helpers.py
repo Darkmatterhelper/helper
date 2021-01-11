@@ -28,7 +28,7 @@ def get_all_essay_question_ids(quiz_questions):
     if settings.has_question_bank:
         print('Getting question data from Question Bank...')
         # get all quiz submissions
-        submissions = settings.quiz.get_all_quiz_submissions()
+        submissions = settings.quiz.get_submissions()
         for sub in submissions:
             submission_questions = sub.get_submission_questions()
 

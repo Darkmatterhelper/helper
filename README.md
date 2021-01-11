@@ -1,6 +1,6 @@
-# Quiz Response PDFs
+# Canvas Quiz Response PDFs
 
-> - name: quiz-response-pdfs
+> - name: canvas-quiz-response-pdfs
 > - ops-run-with: jupyter
 > - python>=3.7
 > - canvasapi>=2.0.0
@@ -8,7 +8,7 @@
 
 ## Summary
 
-**Quiz Response PDFs (quiz-response-pdfs)** is a Jupyter Notebook and Python application that pulls quiz data from [Canvas LMS](https://github.com/instructure/canvas-lms) to create PDF documents containing student answers to _essay questions_. This was developed to allow essay type questions to be run through Turnitin. The application requires the following user inputs:
+**Canvas Quiz Response PDFs (quiz-response-pdfs)** is a Jupyter Notebook and Python application that pulls quiz data from [Canvas LMS](https://github.com/instructure/canvas-lms) to create PDF documents containing student answers to _essay questions_. This was developed to allow essay type questions to be run through Turnitin. The application requires the following user inputs:
 
 - Canvas Instance (i.e. https://ubc.instructure.com)
 - Active Canvas Access Token
@@ -47,7 +47,7 @@
 
 ### Sauder Operations
 
-_Are you Sauder Operations Staff? Please go [here](https://github.com/saud-learning-services/instructions-and-other-templates/blob/main/docs/running-instructions.md#running-the-script) for detailed instructions to run in Jupyter. ("The Project", or "the-project" is "quiz-response-pdfs" or "Quiz Response PDFs")._
+_Are you Sauder Operations Staff? Please go [here](https://github.com/saud-learning-services/instructions-and-other-templates/blob/main/docs/running-instructions.md#running-the-script) for detailed instructions to run in Jupyter. ("The Project", or "the-project" is "canvs-quiz-response-pdfs" or "Canvas Quiz Response PDFs")._
 
 ### General (terminal instructions)
 
@@ -56,12 +56,12 @@ _Are you Sauder Operations Staff? Please go [here](https://github.com/saud-learn
 #### First Time
 
 1. Ensure you have [conda](https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html) installed (Python 3.7 version)
-1. Clone **quiz-response-pdfs** repository
+1. Clone **canvas-quiz-response-pdfs** repository
 1. Import environment (once): `$ conda env create -f environment.yml`
 
 #### Every Time
 
 1. Run:
-   1. navigate to your directory `$ cd YOUR_PATH/quiz-response-pdfs`
-   1. activate the environment (see step 3 on first run) `$ conda activate quiz-response-pdfs`
-   1. run the script and follow prompts in terminal `$ python src/quiz_response_pdfs`
+   1. navigate to your directory `$ cd YOUR_PATH/canvas-quiz-response-pdfs`
+   1. activate the environment (see step 3 on first run) `$ conda activate canvs-quiz-response-pdfs`
+   1. run the script and follow prompts in terminal `$ python src/quiz_response_pdfs.py`
