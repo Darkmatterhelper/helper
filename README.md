@@ -63,5 +63,5 @@ _Are you Sauder Operations Staff? Please go [here](TODO) for detailed instructio
 
 1. Run:
    1. navigate to your directory `$ cd YOUR_PATH/canvas-quiz-response-pdfs`
-   1. activate the environment (see step 3 on first run) `$ conda activate canvs-quiz-response-pdfs`
+   1. activate the environment (see step 3 on first run) `$ conda activate canvas-quiz-response-pdfs`
    1. run the script and follow prompts in terminal `$ python src/quiz_response_pdfs.py`
