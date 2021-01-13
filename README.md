@@ -8,7 +8,7 @@
 
 ## Summary
 
-**Canvas Quiz Response PDFs (quiz-response-pdfs)** is a Jupyter Notebook and Python application that pulls quiz data from [Canvas LMS](https://github.com/instructure/canvas-lms) to create PDF documents containing student answers to _essay questions_. This was developed to allow essay type questions to be run through Turnitin. The application requires the following user inputs:
+**Canvas Quiz Response PDFs (canvas-quiz-response-pdfs)** is a Jupyter Notebook and Python application that pulls quiz data from [Canvas LMS](https://github.com/instructure/canvas-lms) to create PDF documents containing student answers to _essay questions_. This was developed to allow essay type questions to be run through Turnitin. The application requires the following user inputs:
 
 - Canvas Instance (i.e. https://ubc.instructure.com)
 - Active Canvas Access Token
@@ -42,10 +42,6 @@
 - Formatting in the student response is **not** preserved
 - Will only output questions of type “Essay Question” on Canvas
 - Tool is designed for a _Final Exam_ use case and therefore, **should not be run on Quizzes that allow more than one attempt.** Doing so may cause unexpected and/or unreliable behaviour.
-
-## Getting Started
-
-### Sauder Operations
 
 ## Getting Started
 
