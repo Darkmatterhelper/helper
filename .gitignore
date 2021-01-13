@@ -3,6 +3,7 @@
 __pycache__/
 .ipynb_checkpoints
 *.code-workspace
+.DS_Store
 
 # ignore legacy folder
 legacy
@@ -14,3 +15,4 @@ raw_reports/*
 
 output/*
 !output/.gitkeep
+
