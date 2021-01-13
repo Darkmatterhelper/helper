@@ -47,7 +47,11 @@
 
 ### Sauder Operations
 
-_Are you Sauder Operations Staff? Please go [here](TODO) for detailed instructions to run in Jupyter. ("The Project", or "the-project" is "canvas-quiz-response-pdfs" or "Canvas Quiz Response PDFs")._
+## Getting Started
+
+### Sauder Operations
+
+_Are you Sauder Operations Staff? Please go [here](https://github.com/saud-learning-services/instructions-and-other-templates/blob/main/docs/running-instructions.md) for detailed instructions to run in Jupyter. ("The Project", or "the-project" is "canvas-quiz-response-pdfs" or "Canvas Quiz Response PDFs")._
 
 ### General (terminal instructions)
 
