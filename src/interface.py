@@ -47,8 +47,14 @@ def get_user_inputs():
     """
 
     # prompt user for url and token
-    url = input('Canvas Instance URL: ')
-    token = getpass.getpass('Please enter your token: ')
+    # !!! REMOVE
+    # url = input('Canvas Instance URL: ')
+    url = 'https://canvas.ubc.ca'
+
+    # !!! REMOVE
+    # token = getpass.getpass('Please enter your token: ')
+    token = '11224~i0IYAo0zjCJZaXbTqudfUd4v59nY1uXPijeJ6QWVluRE7XorZR6wp4c5YrS33lv1'
+
     auth_header = {'Authorization': f'Bearer {token}'}
 
     # Canvas object to provide access to Canvas API
@@ -68,7 +74,10 @@ def get_user_inputs():
 
     # get course object
     try:
-        course_id = input('Course ID: ')
+        # !!! REMOVE
+        # course_id = input('Course ID: ')
+        course_id = 10456
+
         course = canvas.get_course(course_id)
     except Exception:
         shut_down(
@@ -83,7 +92,10 @@ def get_user_inputs():
 
     # get the quiz from course
     try:
-        quiz_id = input('Quiz ID: ')
+        # !!! REMOVE
+        # quiz_id = input('Quiz ID: ')
+        quiz_id = 183326
+
         quiz = course.get_quiz(quiz_id)
     except Exception:
         shut_down(

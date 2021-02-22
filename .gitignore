@@ -8,6 +8,8 @@ __pycache__/
 # ignore legacy folder
 legacy
 
+# ignore local folder
+local
 
 # Keep following folders but not contents
 raw_reports/*
