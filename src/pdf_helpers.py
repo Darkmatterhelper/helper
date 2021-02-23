@@ -65,8 +65,7 @@ def wrap_text_line(pdf_txt, raw_txt, lines, pdf):
         # take off the first 60 characters from str
         if len(raw_txt) <= 60:
             # HERE IS ONE SUCH MOMENT
-            pdf_text = __draw_text(pdf_txt, raw_txt)
-            lines += 1
+            pdf_txt, lines = __draw_text(pdf_txt, raw_txt, lines)
             return pdf_txt, lines, pdf
         else:
             line = raw_txt[0:60]
@@ -82,12 +81,11 @@ def wrap_text_line(pdf_txt, raw_txt, lines, pdf):
 
             # HERE IS ANOTHER SUCH MOMENT
             # pdf_txt.textLine(line)
-            pdf_txt = __draw_text(pdf_txt, line)
-            lines += 1
+            pdf_txt, lines = __draw_text(pdf_txt, line, lines)
 
     return pdf_txt, lines, pdf
 
-def __draw_text(pdf_txt, raw_txt):
+def __draw_text(pdf_txt, raw_txt, lines):
     '''
     Handles the display of paragraphs in the PDF
     '''
@@ -96,11 +94,13 @@ def __draw_text(pdf_txt, raw_txt):
     for p in paragraphs:
         if p == '\n':
             pdf_txt.textLine(' ')
+            lines += 1
             continue
 
         pdf_txt.textLine(p)
+        lines += 1
     
-    return pdf_txt
+    return pdf_txt, lines
 
 
 def draw_my_ruler(pdf):
