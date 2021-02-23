@@ -64,7 +64,6 @@ def wrap_text_line(pdf_txt, raw_txt, lines, pdf):
 
         # take off the first 60 characters from str
         if len(raw_txt) <= 60:
-            # HERE IS ONE SUCH MOMENT
             pdf_txt, lines = __draw_text(pdf_txt, raw_txt, lines)
             return pdf_txt, lines, pdf
         else:
@@ -79,8 +78,6 @@ def wrap_text_line(pdf_txt, raw_txt, lines, pdf):
                 line = line + raw_txt
                 raw_txt = ''
 
-            # HERE IS ANOTHER SUCH MOMENT
-            # pdf_txt.textLine(line)
             pdf_txt, lines = __draw_text(pdf_txt, line, lines)
 
     return pdf_txt, lines, pdf
