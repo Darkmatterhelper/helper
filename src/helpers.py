@@ -43,11 +43,10 @@ def get_all_essay_question_ids(quiz_questions):
 
 
 def _get_essay_question_ids(questions):
-    essay_questions = filter(
+    essay_questions = list(filter(
         lambda q: (q.question_type == 'essay_question'),
         questions
-    )
-
+    ))
     only_ids = map(
         lambda q: (str(q.id)),
         essay_questions

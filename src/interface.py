@@ -48,6 +48,7 @@ def get_user_inputs():
 
     # prompt user for url and token
     url = input('Canvas Instance URL: ')
+
     token = getpass.getpass('Please enter your token: ')
     auth_header = {'Authorization': f'Bearer {token}'}
 
@@ -84,6 +85,7 @@ def get_user_inputs():
     # get the quiz from course
     try:
         quiz_id = input('Quiz ID: ')
+
         quiz = course.get_quiz(quiz_id)
     except Exception:
         shut_down(
