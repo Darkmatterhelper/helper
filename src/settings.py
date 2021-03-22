@@ -27,5 +27,5 @@ def init():
     # Does this quiz use question bank(s) (default: false)
     global has_question_bank
 
-    # Should the output include questions (default: true)
+    # Should the output include questions
     global include_questions
