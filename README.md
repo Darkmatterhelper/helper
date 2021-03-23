@@ -23,6 +23,7 @@
 - **ID** (randomly-generated, anonymous student identifier)
 - **Course name** (as it appears on Canvas)
 - **Question text** (as it appears on Canvas)
+  > ⚠️ During execution you'll be given the option to exclude question text in the output pdfs. Question text may be useful to give context about which question is being answered. On the other hand, you may not want to include question text as the text will match across submissions to Turnitin. Ensure that you review the output to be sure it is suitable for your use case.
 - **Student's response** (all submitted text -- does not preserving formatting)
 
 > NOTE: all of the above will repeat for as many questions as are in the quiz (on seperate pages)
