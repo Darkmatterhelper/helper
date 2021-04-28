@@ -17,6 +17,7 @@ from dotenv import load_dotenv
 from termcolor import cprint
 from canvasapi import Canvas
 from util import shut_down
+from pathlib import Path
 from shutil import rmtree
 import pandas as pd
 import settings
@@ -78,12 +79,12 @@ def main():
         columns=['Name', 'UBC ID', 'Canvas ID', 'Anonymous ID'])
 
     # make output directory for quiz
-    dir_path = f'output/COURSE({course_id})_QUIZ({quiz_id})'
+    dir_path = Path(f'output/COURSE({course_id})_QUIZ({quiz_id})')
     if not os.path.exists(dir_path):
         os.makedirs(dir_path)
 
     # make outpit subdirectory for pdfs - delete old data if any is there
-    pdf_dir_path = dir_path + '/pdfs'
+    pdf_dir_path = dir_path / 'pdfs'
     if os.path.exists(pdf_dir_path):
         rmtree(pdf_dir_path)
 
@@ -113,21 +114,22 @@ def main():
             shut_down('There was a problem generating PDFs')
 
     # output to {course_id}_{quiz_id}_students.csv
+    output_path = Path(f'{dir_path}/{course_id}_{quiz_id}_students.csv')
     students_df.to_csv(
-        f'{dir_path}/{course_id}_{quiz_id}_students.csv', index=False)
+        output_path, index=False)
 
     # Call the function to retrieve all files and folders of the assigned directory
     filePaths = retrieve_file_paths(pdf_dir_path)
 
     # writing files to a zipfile
-    zip_file = zipfile.ZipFile(pdf_dir_path + '.zip', 'w')
+    zip_file = zipfile.ZipFile(str(pdf_dir_path) + '.zip', 'w')
     with zip_file:
         # writing each file one by one
         for file in filePaths:
-            arcname = file[len(dir_path) + 1:]
+            arcname = file[len(str(dir_path)) + 1:]
             zip_file.write(file, arcname)
 
-    cprint('PDFs successfully created in: ' + pdf_dir_path + '.zip', 'green')
+    cprint('PDFs successfully created in: ' + str(pdf_dir_path) + '.zip', 'green')
     rmtree(pdf_dir_path)
 
 
