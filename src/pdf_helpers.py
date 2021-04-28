@@ -32,7 +32,8 @@ def generate_pdf(row, cols, title, pdf_dir_path, anonymous_id):
         text.setFont('Courier', 12)
 
         # add question text
-        text, lines, pdf = wrap_text_line(text, c, lines, pdf)
+        if settings.include_questions:
+            text, lines, pdf = wrap_text_line(text, c, lines, pdf)
 
         # add space
         text.textLine(' ')

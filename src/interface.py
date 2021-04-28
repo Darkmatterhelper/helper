@@ -93,14 +93,21 @@ def get_user_inputs():
 
     question_bank_input = input('Does this quiz use Question Bank(s)? [y/n]: ')
 
-    if question_bank_input == 'y' or question_bank_input == 'Y':
+    if question_bank_input.upper() == 'Y':
         has_question_bank = True
     else:
         has_question_bank = False
+    
+    include_questions_in_pdf = input('Would you like questions to appear in the output PDFs? [y/n]: ')
+
+    if include_questions_in_pdf.upper() == 'Y':
+        include_questions = True
+    else:
+        include_questions = False
 
     # prompt user for confirmation
-    _prompt_for_confirmation(user.name, course.name,
-                             quiz.title, has_question_bank)
+    _prompt_for_confirmation(user.name, course.name, quiz.title, 
+                             has_question_bank, include_questions)
 
     # set course, quiz, students and auth_header as global variables
     settings.course = course
@@ -108,19 +115,22 @@ def get_user_inputs():
     settings.students = students
     settings.auth_header = auth_header
     settings.has_question_bank = has_question_bank
+    settings.include_questions = include_questions
 
     # return inputs dictionary
     return url, course_id, quiz_id
 
 
-def _prompt_for_confirmation(user_name, course_name, quiz_title, has_question_bank):
+def _prompt_for_confirmation(user_name, course_name, quiz_title, has_question_bank, include_questions):
     """Prints user inputs to screen and asks user to confirm. Shuts down if user inputs
     anything other than 'Y' or 'y'. Returns otherwise.
 
     Args:
         user_name (string): name of user (aka. holder of token)
         course_name (string): name of course returned from Canvas
-        quiz_name (string): name of quiz returned from Canvas course object
+        quiz_title (string): name of quiz returned from Canvas course object
+        has_question_bank (boolean)
+        include_questions (boolean)
 
     Returns:
         None -- returns only if user confirms
@@ -131,6 +141,7 @@ def _prompt_for_confirmation(user_name, course_name, quiz_title, has_question_ba
     print(f'COURSE:  {course_name}')
     print(f'QUIZ:  {quiz_title}')
     print(f'HAS QUESTION BANK: {has_question_bank}')
+    print(f"INCLUDE Q'S in PDF: {include_questions}")
     print('\n')
 
     confirm = input(
