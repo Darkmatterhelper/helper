@@ -91,14 +91,14 @@ def get_user_inputs():
         shut_down(
             f'ERROR: Quiz not found [ID: {quiz_id}]. Please check quiz number.')
 
-    question_bank_input = input('Does this quiz use Question Bank(s)? [y/n]: ')
+    question_bank_input = input('Does this quiz use any Question Banks? [y/n]: ')
 
     if question_bank_input.upper() == 'Y':
         has_question_bank = True
     else:
         has_question_bank = False
     
-    include_questions_in_pdf = input('Would you like questions to appear in the output PDFs? [y/n]: ')
+    include_questions_in_pdf = input('Would you like question text to appear in the output PDFs? [y/n]: ')
 
     if include_questions_in_pdf.upper() == 'Y':
         include_questions = True

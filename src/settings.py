@@ -13,19 +13,19 @@ Monday, May 04, 2020
 def init():
 
     # Canvas object to provide access to Canvas API
-    global course
+    course = None
 
     # Quiz object representing Canvas quiz specified by user input
-    global quiz
+    quiz = None
 
     # Object containing information about students in course
-    global students
+    students = None
 
     # Authorization for API Calls
-    global auth_header
+    auth_header = None
 
     # Does this quiz use question bank(s) (default: false)
-    global has_question_bank
+    has_question_bank = None
 
     # Should the output include questions
-    global include_questions
+    include_questions = None

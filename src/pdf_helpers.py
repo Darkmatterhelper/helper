@@ -13,7 +13,9 @@ import settings
 
 
 def generate_pdf(row, cols, title, pdf_dir_path, anonymous_id):
-    pdf = pdfcanvas.Canvas(pdf_dir_path + '/' + f'{title}.pdf')
+    filename = f'{title}.pdf'
+    target = pdf_dir_path / filename
+    pdf = pdfcanvas.Canvas(str(target))
     # draw_my_ruler(pdf)
 
     # set title for pdf
