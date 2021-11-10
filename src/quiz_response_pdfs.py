@@ -40,9 +40,6 @@ pp = pprint.PrettyPrinter(indent=4)
 
 def main():
 
-    # initialize global variables - call only once
-    settings.init()
-
     # get user inputs
     url, course_id, quiz_id = get_user_inputs()
 
@@ -84,7 +81,7 @@ def main():
     students_df = pd.DataFrame(columns=["Name", "UBC ID", "Canvas ID", "Anonymous ID"])
 
     # make output directory for quiz
-    dir_path = Path(f"output/COURSE({course_id})_QUIZ({quiz_id})")
+    dir_path = Path(f"{settings.ROOT}output/COURSE({course_id})_QUIZ({quiz_id})")
     if not os.path.exists(dir_path):
         os.makedirs(dir_path)
 

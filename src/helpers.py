@@ -104,7 +104,8 @@ def download_quiz_report(report_info):
         download_url = report_info["file"]["url"]
         filename = report_info["file"]["display_name"]
         res = requests.get(download_url, headers=settings.auth_header)
-        report_path = Path(f"raw_reports/{filename}")
+        report_path = Path(f"{settings.ROOT}/raw_reports/{filename}")
+        print(report_path)
 
         with (open(report_path, "wb")) as output:
             output.write(res.content)
