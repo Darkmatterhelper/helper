@@ -9,6 +9,7 @@ Monday, May 04, 2020
 """
 
 from util import shut_down
+from pathlib import Path
 import pandas as pd
 import settings
 import requests
@@ -103,8 +104,9 @@ def download_quiz_report(report_info):
         download_url = report_info["file"]["url"]
         filename = report_info["file"]["display_name"]
         res = requests.get(download_url, headers=settings.auth_header)
+        report_path = Path(f"raw_reports/{filename}")
 
-        with (open("raw_reports/" + filename, "wb")) as output:
+        with (open(report_path, "wb")) as output:
             output.write(res.content)
             print(f"Outputting Raw Report: {filename}\n")
 
