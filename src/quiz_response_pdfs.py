@@ -94,16 +94,16 @@ def main():
         sis_id = row['sis_id']
         # add the random id, student name, and UBC sid to a dataset that will be made into csv
         students_df = students_df.append({'Name': name,
-                                          'SIS ID': sis_id],
+                                          'SIS ID': sis_id,
                                           'Canvas ID': row['id'],
-                                          'Name': row['name']},
+                                          'Name': row['name']}, 
                                          ignore_index=True)
         # create a pdf
-        doc_title = f'{row['sis_id']}_row['name']_{course_id}_{quiz_id}'
+        doc_title = f'{sis_id}_{name}_{course_id}_{quiz_id}'
 
         # create and output pdf
         try:
-            generate_pdf(row, cols, doc_title, pdf_dir_path, anonymous_id)
+            generate_pdf(row, cols, doc_title, pdf_dir_path, sis_id)
         except Exception:
             shut_down('There was a problem generating PDFs')
 
