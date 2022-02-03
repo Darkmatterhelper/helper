@@ -68,10 +68,6 @@ def main():
             cols.append(c)
     df = df[cols]
 
-    # remove name and id so we're only left with question column names - used later
-    cols.remove('name')
-    cols.remove('id')
-    cols.remove('sis_id')
 
     # make students dataframe
     students_df = pd.DataFrame(
@@ -91,20 +87,19 @@ def main():
 
     for index, row in df.iterrows():
         # generate a random id for the student
-        anonymous_id = generate_random_id()
-
         # get UBC id - you can get this in a real SIS linked course!
         # ubc_stu_id = get_ubc_id(row['id'])
         
-
+        name = row['name']
+        sis_id = row['sis_id']
         # add the random id, student name, and UBC sid to a dataset that will be made into csv
-        students_df = students_df.append({'Name': row['name'],
-                                          'UBC ID': row['sis_id'],
+        students_df = students_df.append({'Name': name,
+                                          'SIS ID': sis_id],
                                           'Canvas ID': row['id'],
-                                          'Anonymous ID': anonymous_id},
+                                          'Name': row['name']},
                                          ignore_index=True)
         # create a pdf
-        doc_title = f'{anonymous_id}_{course_id}_{quiz_id}'
+        doc_title = f'{row['sis_id']}_row['name']_{course_id}_{quiz_id}'
 
         # create and output pdf
         try:
