@@ -1,11 +1,12 @@
 """
-QUIZ REPORTS: main
+QUIZ REPORTS: not-anonymous
 
 authors:
 @markoprodanovic
+@alisonmyers
 
 last edit:
-Monday, May 04, 2020
+Feb 2, 2022
 """
 
 from helpers import (get_all_essay_question_ids, create_quiz_report,
